@@ -7,8 +7,8 @@ simple pet-owner system in java
 ## Gateway         
 -> gateway application providing communication between separate projects with separate databases owners and pets on different ports          
 
-## owners
+## Owners
 -> project managing owner entities and requests directed at owners        
 
-## pets        
+## Pets        
 -> project managing pet entities and requests directed at pets, with simple owner implementation to maintain link between entities (one to many)          
