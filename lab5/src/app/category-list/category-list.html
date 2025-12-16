@@ -1,0 +1,37 @@
+<div class="container">
+  <h2>All pet owners</h2>
+
+  <a routerLink="/categories/add">Add new pet owner</a>
+
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Surname</th>
+      <th>ID</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let owner of owners">
+      <td>{{ owner.name }}</td>
+      <td>{{ owner.surname }}</td>
+      <td>{{ owner.ownerId }}</td>
+
+      <td>
+        <a [routerLink]="['/categories/edit', owner.ownerId]" class="btn btn-info btn-sm text-white">
+          Edit
+        </a>
+        <a [routerLink]="['/categories', owner.ownerId]" class="btn btn-info btn-sm text-white">
+          Details
+        </a>
+        <button (click)="deleteOwner(owner.ownerId)">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <ng-template #emptyState>
+    <p>No data</p>
+  </ng-template>
+</div>

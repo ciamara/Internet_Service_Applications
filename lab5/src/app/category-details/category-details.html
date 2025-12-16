@@ -1,0 +1,76 @@
+<div class="container mt-4">
+  <h2>Pet Owner Details</h2>
+
+  <div *ngIf="owner">
+
+    <div class="card shadow-sm mb-5">
+      <div class="card-header bg-dark text-white d-flex align-items-center gap-3">
+        <a routerLink="/" class="btn btn-outline-light btn-sm">
+          &larr; Back </a>
+        <h3 class="mb-0">{{ owner.name }} {{ owner.surname }}</h3>
+      </div>
+
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <p><strong>Phone Number:</strong> {{ owner.phoneNumber }}</p>
+            <p><strong>Address:</strong> {{ owner.address }}</p>
+          </div>
+          <div class="col-md-6">
+            <p><strong>Date of Birth:</strong> {{ owner.dateOfBirth | date:'longDate' }}</p>
+            <p><strong>ID:</strong> <small class="text-muted">{{ owner.ownerId }}</small></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-primary" [routerLink]="['/categories', owner.ownerId, 'elements', 'add']">
+      Add New Pet
+    </button>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h4>Pets ({{ pets.length }})</h4>
+    </div>
+
+    <div *ngIf="pets.length > 0; else noPets">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle">
+          <thead class="table-light">
+          <tr>
+            <th>Name</th>
+            <th>Id</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let pet of pets">
+            <td class="fw-bold">{{ pet.name }}</td>
+            <td><span class="badge bg-secondary">{{ pet.petId }}</span></td>
+            <td>
+              <button class="btn btn-primary" [routerLink]="['/categories', owner.ownerId, 'elements', pet.petId, 'edit']">
+                edit
+              </button>
+              <button class="btn btn-details" [routerLink]="['/categories', owner.ownerId, 'elements', pet.petId]" >
+                details
+              </button>
+
+              <button
+                class="btn-danger"
+                (click)="deletePet(pet)">
+                delete
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <ng-template #noPets>
+      <div class="alert alert-info">
+        this owner doesn't have any pets yet
+      </div>
+    </ng-template>
+
+  </div>
+</div>

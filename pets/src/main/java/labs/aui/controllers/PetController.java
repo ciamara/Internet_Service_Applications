@@ -4,8 +4,11 @@ import labs.aui.Pet;
 import labs.aui.DTOS.PetCollectionDTO;
 import labs.aui.DTOS.PetReadDTO;
 import labs.aui.DTOS.PetCreateUpdateDTO;
+import labs.aui.SimpleOwner;
 import labs.aui.mappers.PetMapper;
+import labs.aui.repos.SimpleOwnerRepository;
 import labs.aui.service.PetService;
+import labs.aui.service.SimpleOwnerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,10 +23,12 @@ public class PetController {
 
     private final PetService petService;
     private final PetMapper petMapper;
+    private final SimpleOwnerService simpleOwnerService;
 
-    public PetController(PetService petService, PetMapper petMapper) {
+    public PetController(PetService petService, PetMapper petMapper, SimpleOwnerService simpleOwnerService) {
         this.petService = petService;
         this.petMapper = petMapper;
+        this.simpleOwnerService = simpleOwnerService;
     }
 
     @GetMapping

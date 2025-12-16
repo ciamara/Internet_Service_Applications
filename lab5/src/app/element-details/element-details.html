@@ -1,0 +1,71 @@
+<div class="container mt-4">
+
+  <div *ngIf="pet; else loadingOrError">
+
+    <div class="card shadow-sm">
+      <div class="card-header bg-dark text-white">
+        <a [routerLink]="['/categories', currentOwnerId]" class="btn btn-outline-light btn-sm back-btn">
+          &larr; Back
+        </a>
+        <h3 class="mb-0">{{ pet.name }}</h3>
+      </div>
+
+      <div class="card-body">
+
+        <div class="row mb-4">
+          <div class="col-md-6 detail-group">
+            <label>Animal Type:</label>
+            <p class="lead">{{ pet.animal }}</p>
+          </div>
+          <div class="col-md-6 detail-group">
+            <label>Breed:</label>
+            <p class="lead">{{ pet.breed }}</p>
+          </div>
+        </div>
+
+        <hr class="divider">
+
+        <div class="row">
+          <div class="col-md-6">
+            <ul class="list-unstyled">
+              <li class="detail-item">
+                <strong>Gender:</strong> {{ pet.gender }}
+              </li>
+              <li class="detail-item">
+                <strong>Color:</strong> {{ pet.color }}
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-md-6">
+            <ul class="list-unstyled">
+              <li class="detail-item">
+                <strong>Weight:</strong> {{ pet.weight }} kg
+              </li>
+              <li class="detail-item">
+                <strong>Date of Birth:</strong> {{ pet.dateOfBirth | date:'longDate' }}
+              </li>
+              <li class="detail-item">
+                <strong>Pet ID:</strong> <small class="text-muted">{{ pet.petId }}</small>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <ng-template #loadingOrError>
+    <div class="alert alert-warning" *ngIf="errorMessage; else loading">
+      {{ errorMessage }}
+    </div>
+    <ng-template #loading>
+      <div class="text-center p-4" style="color: #ad1457;">
+        Loading pet details...
+      </div>
+    </ng-template>
+  </ng-template>
+
+</div>

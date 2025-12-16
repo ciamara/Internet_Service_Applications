@@ -1,6 +1,8 @@
 package labs.aui.service;
 
+import labs.aui.Pet;
 import labs.aui.SimpleOwner;
+import labs.aui.exceptions.ResourceNotFoundException;
 import labs.aui.repos.SimpleOwnerRepository;
 import org.springframework.stereotype.Service;
 
@@ -21,5 +23,10 @@ public class SimpleOwnerService {
 
     public void deleteSimpleOwner(UUID simpleOwnerId) {
         simpleOwnerRepository.deleteById(simpleOwnerId);
+    }
+
+    public SimpleOwner findById(UUID id) {
+        return simpleOwnerRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("SimpleOwner", id));
     }
 }
