@@ -1,0 +1,58 @@
+services:
+  # --- Databases ---
+  db-owners:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: owners_db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+
+  db-pets:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: pets_db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+
+  # --- Microservices ---
+  owners-service:
+    build: ./owners
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db-owners:5432/owners_db
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SERVER_PORT=8081
+    depends_on:
+      - db-owners
+
+  pets-service:
+    build: ./pets
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db-pets:5432/pets_db
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SERVER_PORT=8082
+    depends_on:
+      - db-pets
+
+  gateway-service:
+    build: ./GatewayApplication
+    ports:
+      - "8080:8080"
+    environment:
+      - CATEGORIES_SERVICE_URL=http://owners-service:8081
+      - ELEMENTS_SERVICE_URL=http://pets-service:8082
+    depends_on:
+      - owners-service
+      - pets-service
+
+  # --- Angular Frontend ---
+  frontend:
+    build: ./lab5
+    ports:
+      - "4200:80"
+    environment:
+      - PORT=80
+      - GATEWAY_URL=http://gateway-service:8080/
+    depends_on:
+      - gateway-service
